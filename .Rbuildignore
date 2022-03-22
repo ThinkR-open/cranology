@@ -1,0 +1,10 @@
+^cranology\.Rproj$
+^\.Rproj\.user$
+^dev/$
+^_pkgdown\.yml$
+^pkgdown$
+^dev$
+^LICENSE\.md$
+^data-raw$
+^README\.Rmd$
+^CODE_OF_CONDUCT\.md$
