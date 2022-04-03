@@ -10,7 +10,7 @@ is_parsable_date <- function(date) {
 
 date_error_message <- function() {
   paste0(
-    "`dates` must be either be:\n",
+    "`dates` must be either:\n",
     "- a Date -> as.Date(Sys.time())\n",
     "- a character string of the form 'year-month-day': -> '2018-04-10'\n"
   )
