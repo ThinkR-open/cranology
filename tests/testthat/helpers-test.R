@@ -19,5 +19,5 @@ expect_no_error <- function(...) {
 }
 
 expect_invalid_date <- function(...) {
-  expect_error(...,  regexp = "`dates` must be either be:")
+  expect_error(...,  regexp = "`dates` must be either:")
 }
