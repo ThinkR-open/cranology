@@ -33,12 +33,12 @@ test_that("is_valid_dates() works", {
   )
 })
 
-test_that("get_package_number_cran()", {
+test_that("cran_get_package_number_mran() works", {
 
   ## Valid cases
   dday <- as.Date("2022-04-01", "%Y-%m-%d")
   dates <- seq(from = dday - 2, to = dday, by = "day")
-  result <- get_package_number_cran(dates)
+  result <- cran_get_package_number_mran(dates)
   expect_s3_class(result, "data.frame")
   expect_identical(
     result$date,
@@ -49,9 +49,13 @@ test_that("get_package_number_cran()", {
   value_equal <- result$n %in% c(19022L, 19035L, 19033L)
   expect_true(all(value_equal | is.na(result$n[!value_equal])))
 
-  # Invalid cases
+  ## Invalid cases
   expect_error(
-    get_package_number_cran(c("2018-02-21", "2017-123-13", "232-344-3")),
+    cran_get_package_number_mran(c("2018-02-21", "2017-123-13")),
+    regexp = "Some dates are not valid dates:"
+  )
+  expect_error(
+    cran_get_package_number_mran(c("2018-02-21", "232-344-3")),
     regexp = "Some dates are not valid dates:"
   )
 

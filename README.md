@@ -9,11 +9,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of {cranology} is to provide insight about the history of CRAN.
-CRAN is the [Comprehensive R Archive
-Network](https://cran.r-project.org/) the reference platform where R
-packages are made available to the world. {cranology} provides tools to
-scrape data from CRAN and MRAN website.
+The goal of {cranology} is to provide tools to scrape data from CRAN and
+MRAN website.
 
 ## Installation
 
@@ -29,7 +26,22 @@ remotes::install_github("ThinkR-open/cranology")
 library(cranology)
 ```
 
-## Code ofConduct
+``` r
+dates <- seq(
+  from = as.Date("2018-04-10", "%Y-%m-%d"), 
+  by = "1 year", 
+  length.out = 4
+)
+cran_get_package_number_mran(dates)
+#> Scraping MRAN...
+#>         date     n
+#> 1 2018-04-10 12418
+#> 2 2019-04-10 14042
+#> 3 2020-04-10 15507
+#> 4 2021-04-10 17398
+```
+
+## Code of Conduct
 
 Please note that the cranology project is released with a [Contributor
 Code of

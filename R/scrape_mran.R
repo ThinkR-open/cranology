@@ -1,6 +1,8 @@
 
+#' @importFrom lubridate ymd
+#' @noRd
 is_parsable_date <- function(date) {
-  parsed_date <- lubridate::ymd(date, quiet = TRUE)
+  parsed_date <- ymd(date, quiet = TRUE)
   if ( is.na(parsed_date) ) {
     FALSE
   } else {
@@ -29,6 +31,7 @@ is_valid_date <- function(date) {
 }
 
 #' @importFrom purrr map safely transpose pluck map_lgl
+#' @noRd
 is_valid_dates <- function(dates) {
 
   id_problematic_dates <- dates %>%
@@ -55,7 +58,7 @@ is_valid_dates <- function(dates) {
 
 #' @importFrom utils available.packages
 #' @noRd
-.get_package_number_cran <- function(date) {
+.get_package_number_mran <- function(date) {
   tryCatch(
     error = function(cnd) {
       message(
@@ -82,22 +85,28 @@ is_valid_dates <- function(dates) {
 
 
 
-#' Title
+#' Get number of package on CRAN on a given date using MRAN
 #'
-#' Description
+#' This function queries MRAN to retrieve the number of package on CRAN
+#' on a given date.
 #'
-#' @param dates A vector of dates.
+#' @param dates A vector of dates. Either a character vector of the form "yyyy-mm-dd"
+#' or a vector of class "Date".
 #'
-#' @return A data.frame
+#' @return A data.frame with two volumns `date` and `n` the number of packages on CRAN
+#' at that given `date`.
 #'
 #' @importFrom furrr future_map_dfr
 #' @export
+#'
 #' @examples
-get_package_number_cran <- function(dates) {
+#' cran_get_package_number_mran(c("2018-04-10", "2020-03-19"))
+
+cran_get_package_number_mran <- function(dates) {
   is_valid_dates(dates)
-  # TODO: Spinner displaying "Downloading"
-  furrr::future_map_dfr(
+  message("Scraping MRAN...")
+  future_map_dfr(
     dates,
-    .get_package_number_cran
+    .get_package_number_mran
   )
 }

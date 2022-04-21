@@ -19,10 +19,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of {cranology} is to provide insight about the history of CRAN. 
-CRAN is the [Comprehensive R Archive Network](https://cran.r-project.org/) the reference
-platform where R packages are made available to the world. {cranology} provides tools
-to scrape data from CRAN and MRAN website.
+The goal of {cranology} is to provide tools to scrape data from CRAN and MRAN websites.
 
 ## Installation
 
@@ -39,10 +36,15 @@ library(cranology)
 ```
 
 ```{r}
-
+dates <- seq(
+  from = as.Date("2018-04-10", "%Y-%m-%d"), 
+  by = "1 year", 
+  length.out = 4
+)
+cran_get_package_number_mran(dates)
 ```
 
 
-## Code ofConduct
+## Code of Conduct
 
 Please note that the cranology project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
