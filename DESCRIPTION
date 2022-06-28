@@ -1,6 +1,6 @@
 Package: cranology
 Title: Monitor The Evolution Of The Number Of CRAN Packages
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("Antoine", "Languillaume", , "antoine@thinkr.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9843-5632")),
