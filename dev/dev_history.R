@@ -82,6 +82,7 @@ usethis::use_package_doc()
 # devtools::build_vignettes()
 
 # GitHub Actions ----
+usethis::use_github_action_check_release()
 # usethis::use_github_action_check_standard()
 # usethis::use_github_action("pkgdown")
 #  _Add remotes::install_github("ThinkR-open/thinkrtemplate") in this action
