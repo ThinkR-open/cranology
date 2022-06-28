@@ -70,7 +70,8 @@ use_r_with_test("scrape_mran")
 ## Package quality -----------------------------------------
 
 # Documentation ----
-# usethis::use_package_doc()
+usethis::use_package_doc()
+
 # _Vignette
 # file.copy(system.file("templates/html/header_hide.html", package = "thinkridentity"),
 #           "vignettes")
