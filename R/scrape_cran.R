@@ -203,7 +203,9 @@ get_cran_monthly_package_number <- function(
         all_pkgs_summary %>%
           filter(date >= first_created & date <= last_available) %>%
           nrow()
-      })
+      }),
+      # Keep only date -> discard exact time
+      date = as.Date(date)
     )
 
   return(all_pkgs_summary_time)
