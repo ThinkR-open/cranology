@@ -22,9 +22,9 @@ app_sys <- function(...) {
 #' @importFrom purrr map safely transpose map_lgl
 #' @noRd
 detect_id_problematic_date_chr <- function(
-  fishy_dates_chr,
-  reverse = TRUE,
-  n = 100
+    fishy_dates_chr,
+    reverse = TRUE,
+    n = 100
 ) {
 
   # Promote warning to errors
@@ -48,20 +48,55 @@ detect_id_problematic_date_chr <- function(
   return(id_error)
 }
 
-update_dataset_doc_with_time_stamp <- function(
-    path_doc = "R/doc_cran_packages_history.R"
+#' Update dataset documentation
+#'
+#' Update time stamp and dataset dimension every time a new version
+#' of the data is scraped.
+#'
+#' @param dataset_name A character string. One of
+#' c("cran_packages_history", "cran_monthly_package_number").
+#'
+#' @return Nothing used for its side effect of updating documentation.
+#'
+#' @importFrom lubridate today
+#' @importFrom devtools document
+#' @importFrom cli cat_rule
+#'
+#' @noRd
+update_dataset_doc <- function(
+    dataset_name = "cran_packages_history"
 ) {
+  path_doc <- paste0("R/doc_", dataset_name, ".R")
   data_doc <- readLines(path_doc)
+
+  path_dataset <- paste0("data/", dataset_name, ".rda")
+  dataset <- get(load(path_dataset))
+
+  cat_rule("Updating time stamp")
   data_doc <- sub(
-    pattern = "^#' Description\\.$",
+    pattern = "^#' Last update: \\d{4}-\\d{2}-\\d{2}\\.$",
     replacement = sprintf(
-      "#' All packages ever available on CRAN as of %s.",
-      lubridate::today()
+      "#' Last update: %s.",
+      today()
     ),
     x = data_doc
   )
+
+  cat_rule("Updating dimension")
+  data_doc <- gsub(
+    pattern = "#' @format A data frame with \\d+ rows and \\d variables:",
+    replacement = sprintf(
+      "#' @format A data frame with %s rows and %s variables:",
+      nrow(dataset),
+      ncol(dataset)
+    ),
+    x = data_doc
+  )
+
   writeLines(
     text = data_doc,
     con = path_doc
   )
+  cat_rule("Regenerate documentation")
+  document()
 }

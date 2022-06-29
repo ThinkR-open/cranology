@@ -2,8 +2,15 @@
 ### Daily ----------------------------------------------------------------------
 
 attachment::att_amend_desc(
-  extra.suggests = "knitr"
+  extra.suggests = c(
+    "knitr",
+    "devtools",
+    "usethis",
+    "withr",
+    "checkhelper"
+  )
 )
+usethis::use_dev_package("checkhelper", type = "Suggests")
 
 devtools::check()
 

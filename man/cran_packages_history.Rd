@@ -7,20 +7,22 @@
 \format{
 A data frame with 37812 rows and 10 variables:
 \describe{
-  \item{ file_name }{  character }
-  \item{ date }{  POSIXct,POSIXt }
-  \item{ time }{  character }
-  \item{ size }{  character }
-  \item{ package_name }{  character }
-  \item{ last_archived }{  POSIXct,POSIXt }
-  \item{ archive }{  logical }
-  \item{ first_date }{  POSIXct,POSIXt }
-  \item{ n_versions }{  integer }
-  \item{ last_modified }{  POSIXct,POSIXt }
+  \item{ file_name }{ [character] Either the name of the .tar.gz or the name
+  of the archive folder holding the .tar.gzs of all versions ever released
+  of a given package.}
+  \item{ date }{ [POSIXct,POSIXt] The date of upload on CRAN. }
+  \item{ time }{ [character] The time of upload on CRAN. }
+  \item{ size }{ [character] The size of the .tar.gzs. '-' in case of archive folder. }
+  \item{ package_name }{ [character] The name of the package. }
+  \item{ last_archived }{ [POSIXct,POSIXt] The date when one version was last archived. }
+  \item{ archive }{ [logical] Was a version ever archived ? }
+  \item{ first_date }{ [POSIXct,POSIXt] The date of the first release.  }
+  \item{ n_versions }{ [integer] The number of versions released. }
+  \item{ last_modified }{ [POSIXct,POSIXt] The date of last release. }
 }
 }
 \source{
-Source
+https://cran.rstudio.com/src/contrib/
 }
 \usage{
 cran_packages_history
