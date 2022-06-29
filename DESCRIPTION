@@ -1,5 +1,5 @@
 Package: cranology
-Title: Monitor The Evolution Of The Number Of CRAN Packages
+Title: The CRAN Chronology
 Version: 0.0.0.9001
 Authors@R: c(
     person("Antoine", "Languillaume", , "antoine@thinkr.fr", role = c("aut", "cre"),
@@ -10,8 +10,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0671-9270")),
     person("ThinkR", role = "cph")
   )
-Description: Scraping routines to monitor the evolution of the number of
-    packages on CRAN.
+Description: Scraping routines and datasets to monitor the evolution of
+    the number of packages on CRAN.
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
