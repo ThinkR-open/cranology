@@ -20,5 +20,6 @@ cran_monthly_package_number
 }
 \description{
 The evolution of the number of packages on CRAN since its beginning.
+Last update: 2022-06-29.
 }
 \keyword{datasets}

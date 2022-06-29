@@ -5,7 +5,7 @@
 \alias{cran_packages_history}
 \title{cran_packages_history}
 \format{
-A data frame with 37812 rows and 10 variables:
+A data frame with 312 rows and 10 variables:
 \describe{
   \item{ file_name }{ [character] Either the name of the .tar.gz or the name
   of the archive folder holding the .tar.gzs of all versions ever released
@@ -28,6 +28,7 @@ https://cran.rstudio.com/src/contrib/
 cran_packages_history
 }
 \description{
-All packages ever available on CRAN as of 2022-06-29.
+All packages ever available on CRAN.
+Last update: 2022-06-29.
 }
 \keyword{datasets}

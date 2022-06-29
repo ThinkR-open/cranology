@@ -4,9 +4,9 @@
 \name{cranology-package}
 \alias{cranology}
 \alias{cranology-package}
-\title{cranology: Monitor The Evolution Of The Number Of CRAN Packages}
+\title{cranology: The CRAN Chronology}
 \description{
-Scraping routines to monitor the evolution of the number of packages on CRAN.
+Scraping routines and datasets to monitor the evolution of the number of packages on CRAN.
 }
 \author{
 \strong{Maintainer}: Antoine Languillaume \email{antoine@thinkr.fr} (\href{https://orcid.org/0000-0001-9843-5632}{ORCID})

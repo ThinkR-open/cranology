@@ -1,6 +1,7 @@
 #' cran_monthly_package_number
 #'
 #' The evolution of the number of packages on CRAN since its beginning.
+#' Last update: 2022-06-29.
 #'
 #' @format A data frame with 297 rows and 2 variables:
 #' \describe{
