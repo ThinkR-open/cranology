@@ -13,28 +13,51 @@ knitr::opts_chunk$set(
 )
 ```
 
-# cranology
+# {cranology}: The CRAN Chronology
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/ThinkR-open/cranology/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ThinkR-open/cranology/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of {cranology} is to provide tools to scrape data from CRAN and MRAN websites.
+The goal of {cranology} is to provide tools to scrape data from CRAN and MRAN websites as well 
+as useful datasets to explore the evolution of the number of packages on CRAN.
 
 ## Installation
 
-You can install the development version of {cranology} like so:
+You can install the development version of {cranology} with:
 
 ``` r
 remotes::install_github("ThinkR-open/cranology")
 ```
 
-## Example
+## Examples
 
 ```{r example}
 library(cranology)
 ```
+
+### Datasets
+
+```{r}
+cran_packages_history
+```
+
+```{r}
+cran_monthly_package_number
+```
+
+
+### Scraping tools
+
+#### CRAN
+
+```{r}
+
+```
+
+
+#### MRAN
 
 ```{r}
 dates <- seq(
@@ -48,4 +71,4 @@ get_package_number_mran(dates)
 
 ## Code of Conduct
 
-Please note that the cranology project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
