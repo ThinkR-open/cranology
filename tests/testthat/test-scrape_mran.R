@@ -43,7 +43,7 @@ test_that("get_package_number_mran() works", {
   expect_identical(
     result$date,
     structure(c(19081, 19082, 19083), class = "Date")
-    )
+  )
   # Account for MRAN failure -> NA being returned
   # result$n <- c(19022, NA, 19033)
   value_equal <- result$n %in% c(19022L, 19035L, 19033L)
@@ -59,4 +59,24 @@ test_that("get_package_number_mran() works", {
     regexp = "Some dates are not valid dates:"
   )
 
+})
+
+test_that("update_monthly_package_number() works", {
+  date_lag <- 3
+  n_additional_dates <- date_lag + 1
+  df <- cran_monthly_package_number[
+    1:(nrow(cran_monthly_package_number) - date_lag),
+  ]
+  df_updated <- update_monthly_package_number(
+    cran_monthly_package_number_df = df
+  )
+  # New dates all correspondent to the same day of the month
+  expect_length(
+    unique(lubridate::day(df_updated$date)),
+    1
+  )
+  expect_equal(
+    nrow(df_updated),
+    nrow(df) + n_additional_dates
+  )
 })

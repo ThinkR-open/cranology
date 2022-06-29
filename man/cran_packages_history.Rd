@@ -5,7 +5,7 @@
 \alias{cran_packages_history}
 \title{cran_packages_history}
 \format{
-A data frame with 37459 rows and 10 variables:
+A data frame with 37812 rows and 10 variables:
 \describe{
   \item{ file_name }{  character }
   \item{ date }{  POSIXct,POSIXt }
@@ -26,6 +26,6 @@ Source
 cran_packages_history
 }
 \description{
-All packages ever available on CRAN as of 2022-04-01.
+All packages ever available on CRAN as of 2022-06-29.
 }
 \keyword{datasets}

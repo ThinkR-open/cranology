@@ -18,6 +18,8 @@ globalVariables(
       "file_name",
       # scrape_cran_page:
       "file_name", "time",
+      # plot_cran_monthly_package_number:
+      "cran_monthly_package_number", "number_packages",
       NULL
     )
   )

@@ -72,14 +72,19 @@ is_valid_dates <- function(dates) {
         n = NA
       )
     },
-    data.frame(
-      date = date,
-      n = nrow(
-        available.packages(
-          repos = sprintf("https://mran.microsoft.com/snapshot/%s", date)
+    {
+      message(
+        sprintf("Scraping number packages on: %s", date)
+      )
+      data.frame(
+        date = date,
+        number_packages = nrow(
+          available.packages(
+            repos = sprintf("https://mran.microsoft.com/snapshot/%s", date)
+          )
         )
       )
-    )
+    }
   )
 }
 
@@ -93,20 +98,83 @@ is_valid_dates <- function(dates) {
 #' @param dates A vector of dates. Either a character vector of the form "yyyy-mm-dd"
 #' or a vector of class "Date".
 #'
+#' @param parallelize A logical. If TRUE {furrr} is used to asynchronously scrap
+#' mran.
+#'
 #' @return A data.frame with two volumns `date` and `n` the number of packages on CRAN
 #' at that given `date`.
 #'
+#' @importFrom purrr map_dfr
 #' @importFrom furrr future_map_dfr
+#'
 #' @export
+#'
+#' @name mran
 #'
 #' @examples
 #' get_package_number_mran(c("2018-04-10", "2020-03-19"))
 
-get_package_number_mran <- function(dates) {
+get_package_number_mran <- function(dates, parallelize = FALSE) {
   is_valid_dates(dates)
   message("Scraping MRAN...")
-  future_map_dfr(
-    dates,
-    .get_package_number_mran
+  if ( isTRUE(parallelize) ) {
+    future_map_dfr(
+      dates,
+      .get_package_number_mran
+    )
+  } else {
+    map_dfr(
+      dates,
+      .get_package_number_mran
+    )
+  }
+}
+
+#' Update `cran_monthly_package_number` dataset
+#'
+#' The creation `cran_monthly_package_number` using `scrape_cran()` is a long process
+#' as theunderlying scrapping operations are time consuming. To more rapidly
+#' update `cran_monthly_package_number` it is easier to rely on data from MRAN.
+#' This what this function does. It uses `get_package_number_mran()` to quickly
+#' update the dataset.
+#'
+#' @param cran_monthly_package_number_df A data.frame similar to
+#' the `cran_monthly_package_number` dataset included within {cranology}.
+#' @inheritParams mran
+#'
+#' @importFrom utils tail
+#' @importFrom lubridate month days today
+#'
+#' @export
+#' @examples
+#' # Simulate `cran_monthly_package_number` update
+#'date_lag <- 3
+#'df <- cran_monthly_package_number[
+#'  1:(nrow(cran_monthly_package_number) - date_lag),
+#']
+#'update_monthly_package_number(
+#'  cran_monthly_package_number_df = df
+#')
+#'
+update_monthly_package_number <- function(
+    cran_monthly_package_number_df,
+    parallelize = FALSE
+) {
+  first_date <- tail(
+    cran_monthly_package_number_df,
+    1
+  )[["date"]] + month(1) - days(1)
+  dates <- seq(
+    from = first_date,
+    to = today(),
+    by = "1 month"
+  )
+  recent_months <- get_package_number_mran(
+    dates = dates,
+    parallelize = parallelize
+  )
+  rbind(
+    cran_monthly_package_number_df,
+    recent_months
   )
 }

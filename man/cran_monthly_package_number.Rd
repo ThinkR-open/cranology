@@ -5,9 +5,9 @@
 \alias{cran_monthly_package_number}
 \title{cran_monthly_package_number}
 \format{
-A data frame with 294 rows and 2 variables:
+A data frame with 297 rows and 2 variables:
 \describe{
-  \item{ date }{  POSIXct,POSIXt }
+  \item{ date }{  Date }
   \item{ number_packages }{  numeric }
 }
 }
