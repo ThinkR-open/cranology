@@ -13,11 +13,3 @@ test_scraping_funs <- function(fun, expected_colnames, ...) {
     # The resulting as > 0 rows
     expect_true(nrow(cran_page_tbl) > 0)
 }
-
-expect_no_error <- function(...) {
-  expect_error(..., regexp = NA)
-}
-
-expect_invalid_date <- function(...) {
-  expect_error(...,  regexp = "`dates` must be either:")
-}

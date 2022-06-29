@@ -9,13 +9,14 @@ get_package_number_mran(dates, parallelize = FALSE)
 }
 \arguments{
 \item{dates}{A vector of dates. Either a character vector of the form "yyyy-mm-dd"
-or a vector of class "Date".}
+or a vector of class "Date". All dates must be posterior to "2014-09-17", the
+day of MRAN first CRAN snapshot.}
 
 \item{parallelize}{A logical. If TRUE {furrr} is used to asynchronously scrap
 mran.}
 }
 \value{
-A data.frame with two volumns `date` and `n` the number of packages on CRAN
+A data.frame with two columns `date` and `n` the number of packages on CRAN
 at that given `date`.
 }
 \description{

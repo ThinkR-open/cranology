@@ -9,14 +9,14 @@ test_that("is_parsable_date() works", {
 test_that("is_valid_date() works", {
 
   # Valid cases
-  expect_no_error(is_valid_date(as.Date(Sys.time())))
-  expect_no_error(is_valid_date(lubridate::dmy("020392")))
-  expect_no_error(is_valid_date("2016-03-02"))
-  expect_no_error(is_valid_date("20160302"))
+  expect_false(is_invalid_date(as.Date(Sys.time())))
+  expect_false(is_invalid_date(lubridate::dmy("020392")))
+  expect_false(is_invalid_date("2016-03-02"))
+  expect_false(is_invalid_date("20160302"))
 
   # Invalid cases
-  expect_invalid_date(is_valid_date("020392"))
-  expect_invalid_date(is_valid_date("2016-31-02"))
+  expect_true(is_invalid_date("020392"))
+  expect_true(is_invalid_date("2016-31-02"))
 })
 
 test_that("is_valid_dates() works", {
@@ -24,12 +24,24 @@ test_that("is_valid_dates() works", {
   # Valid cases
   today <- as.Date(Sys.time())
   dates <- seq(from = today - 10, to = today, by = "day")
-  expect_no_error(is_valid_dates(dates))
+  expect_equal(
+    is_invalid_dates(dates),
+    rep(FALSE, length(dates))
+  )
 
   # Invalid cases
-  expect_error(
-    is_valid_dates(c("2018-02-21", "2017-123-13", "232-344-3")),
-    regexp = "Some dates are not valid dates:"
+  expect_equal(
+    is_invalid_dates(c("2018-02-21", "2017-123-13", "232-344-3")),
+    c(FALSE, TRUE, TRUE)
+  )
+})
+
+test_that("is_anterior_to_mran_launch() works", {
+  expect_true(
+    is_anterior_to_mran_launch(as.Date("2013-09-10"))
+  )
+  expect_false(
+    is_anterior_to_mran_launch(as.Date("2019-09-10"))
   )
 })
 
@@ -57,6 +69,10 @@ test_that("get_package_number_mran() works", {
   expect_error(
     get_package_number_mran(c("2018-02-21", "232-344-3")),
     regexp = "Some dates are not valid dates:"
+  )
+  expect_error(
+    get_package_number_mran(c("2019-09-10", "2013-09-10")),
+    regexp = "Some dates are anterior to MRAN launch:\n2: 2013-09-10"
   )
 
 })
