@@ -100,9 +100,9 @@ is_valid_dates <- function(dates) {
 #' @export
 #'
 #' @examples
-#' cran_get_package_number_mran(c("2018-04-10", "2020-03-19"))
+#' get_package_number_mran(c("2018-04-10", "2020-03-19"))
 
-cran_get_package_number_mran <- function(dates) {
+get_package_number_mran <- function(dates) {
   is_valid_dates(dates)
   message("Scraping MRAN...")
   future_map_dfr(

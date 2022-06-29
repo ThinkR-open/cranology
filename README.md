@@ -33,7 +33,7 @@ dates <- seq(
   by = "1 year", 
   length.out = 4
 )
-cran_get_package_number_mran(dates)
+get_package_number_mran(dates)
 #> Scraping MRAN...
 #>         date     n
 #> 1 2018-04-10 12418
