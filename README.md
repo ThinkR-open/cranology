@@ -14,6 +14,12 @@ The goal of `{cranology}` is to provide tools to scrape data from CRAN
 and MRAN websites as well as useful datasets to explore the evolution of
 the number of packages on CRAN.
 
+``` r
+cranology::plot_cran_monthly_package_number()
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
 ## Installation
 
 You can install the development version of `{cranology}` with:

@@ -23,6 +23,11 @@ knitr::opts_chunk$set(
 The goal of `{cranology}` is to provide tools to scrape data from CRAN and MRAN websites as well 
 as useful datasets to explore the evolution of the number of packages on CRAN.
 
+```{r, fig.retina=2}
+cranology::plot_cran_monthly_package_number()
+```
+
+
 ## Installation
 
 You can install the development version of `{cranology}` with:
