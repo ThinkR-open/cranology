@@ -106,6 +106,9 @@ get_archive_page <- function() {
 #' @importFrom dplyr filter summarise mutate n everything
 #' @importFrom stringr str_detect
 get_package_first_release <- function(package_name) {
+  # message(
+  #   sprintf("Get %s first release", package_name)
+  # )
   file.path("Archive", package_name) %>%
     scrape_cran_page() %>%
     filter(
@@ -122,8 +125,8 @@ get_package_first_release <- function(package_name) {
     )
 }
 
-#' Coucou
-#'
+
+
 #' Parse the entire archive only once
 #'
 #' @importFrom furrr future_map_dfr
@@ -131,16 +134,23 @@ get_package_first_release <- function(package_name) {
 #' @importFrom dplyr left_join bind_rows group_by summarise mutate tibble filter
 #' @importFrom lubridate as_datetime now
 #' @importFrom purrr map_dbl
+#' @importFrom cli cat_rule
+#' @noRd
 scrape_cran_packages_history <- function() {
 
+  cat_rule("Scraping main page")
   main_page_df <- get_main_page()
+  cat_rule("Scraping archive page")
   archive_page_df <- get_archive_page()
+  cat_rule("Scraping packages first release")
   # This takes ~ 15 mins on a 8-core
-  archive_first_release_df <- furrr::future_map_dfr(
+  archive_first_release_df <- future_map_dfr(
     archive_page_df$package_name,
-    get_package_first_release
+    get_package_first_release,
+    .progress = TRUE
   )
 
+  cat_rule("Combining data")
   # Combine main, archive page and first release info
   all_packages_df <- archive_page_df %>%
     # Add date of first release and number of versions
@@ -151,15 +161,12 @@ scrape_cran_packages_history <- function() {
   return(all_packages_df)
 }
 
-#' Title
-#'
-#' Description
-#'
+
 #' @param cran_packages_history_df A data.frame similar to cranology::cran_packages_history
 #' which is the default value.
-#'
+#' @noRd
 get_cran_monthly_package_number <- function(
-  cran_packages_history_df = cran_packages_history
+    cran_packages_history_df = cran_packages_history
 ) {
   # There may be multiple version of same package in "current" repository
   all_pkgs_summary <- cran_packages_history_df %>%
@@ -203,10 +210,47 @@ get_cran_monthly_package_number <- function(
         all_pkgs_summary %>%
           filter(date >= first_created & date <= last_available) %>%
           nrow()
-      })
+      }),
+      # Keep only date -> discard exact time
+      date = as.Date(date)
     )
 
   return(all_pkgs_summary_time)
+}
+
+
+#' Scrape CRAN packages history
+#'
+#' This function is the workhorse of {cranology}. It scrapes
+#' https://cran.rstudio.com and generates two datasets:
+#'
+#' * `cran_packages_history`: A data.frame gathering information about every package
+#' that has ever been on CRAN including the first release date the number
+#' of versions released so far...
+#' * `cran_monthly_package_number`: A data.frame holding the number of
+#' packages available on CRAN since its beginning. Data is provided on
+#' a montly basis.
+#'
+#' @return A list of two data.frames: `cran_packages_history` and
+#' `cran_monthly_package_number`.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' scrape_cran_history()
+#' }
+scrape_cran_history <- function() {
+  cran_packages_history <- scrape_cran_packages_history()
+  cran_monthly_package_number <- get_cran_monthly_package_number(
+    cran_packages_history
+  )
+  return(
+    list(
+      cran_packages_history = cran_packages_history,
+      cran_monthly_package_number = cran_monthly_package_number
+    )
+  )
 }
 
 

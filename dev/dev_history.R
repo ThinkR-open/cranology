@@ -2,8 +2,15 @@
 ### Daily ----------------------------------------------------------------------
 
 attachment::att_amend_desc(
-  extra.suggests = "knitr"
+  extra.suggests = c(
+    "knitr",
+    "devtools",
+    "usethis",
+    "withr",
+    "checkhelper"
+  )
 )
+usethis::use_dev_package("checkhelper", type = "Suggests")
 
 devtools::check()
 
@@ -70,7 +77,8 @@ use_r_with_test("scrape_mran")
 ## Package quality -----------------------------------------
 
 # Documentation ----
-# usethis::use_package_doc()
+usethis::use_package_doc()
+
 # _Vignette
 # file.copy(system.file("templates/html/header_hide.html", package = "thinkridentity"),
 #           "vignettes")
@@ -81,6 +89,7 @@ use_r_with_test("scrape_mran")
 # devtools::build_vignettes()
 
 # GitHub Actions ----
+usethis::use_github_action_check_release()
 # usethis::use_github_action_check_standard()
 # usethis::use_github_action("pkgdown")
 #  _Add remotes::install_github("ThinkR-open/thinkrtemplate") in this action

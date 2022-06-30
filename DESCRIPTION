@@ -1,6 +1,6 @@
 Package: cranology
-Title: Monitor The Evolution Of The Number Of CRAN Packages
-Version: 0.0.0.9000
+Title: The CRAN Chronology
+Version: 0.1.0
 Authors@R: c(
     person("Antoine", "Languillaume", , "antoine@thinkr.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9843-5632")),
@@ -10,14 +10,17 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0671-9270")),
     person("ThinkR", role = "cph")
   )
-Description: Scraping routines to monitor the evolution of the number of
-    packages on CRAN.
+Description: Scraping routines and datasets to monitor the evolution of
+    the number of packages on CRAN.
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports: 
+    cli,
+    devtools,
     dplyr,
     furrr,
+    ggplot2,
     lubridate,
     magrittr,
     purrr,
@@ -27,10 +30,15 @@ Imports:
     stringr,
     utils
 Suggests: 
+    checkhelper (>= 0.0.0.9000),
     knitr,
-    testthat
+    testthat,
+    usethis,
+    withr
 VignetteBuilder: 
     knitr
+Remotes: 
+    thinkr-open/checkhelper
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
