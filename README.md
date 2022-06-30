@@ -88,8 +88,8 @@ scrape_cran_history()
 #### MRAN
 
 `{cranology}` also includes the `get_package_number_mran()` function to
-more quickly get the number that were available on CRAN at any given
-date.
+more quickly get the number of packages that were available on CRAN at
+any given date.
 
 ``` r
 dates <- seq(
@@ -137,6 +137,12 @@ cran_monthly_package_number[
 #>   <date>               <dbl>
 #> 1 2013-09-08            4906
 ```
+
+## Acknowledgements
+
+The `scrape_cran()` function is essentially a tidyversification of this
+[github gist](https://gist.github.com/daroczig/3cf06d6db4be2bbe3368)
+written by @daroczig.
 
 ## Code of Conduct
 
