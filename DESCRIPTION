@@ -1,6 +1,6 @@
 Package: cranology
 Title: The CRAN Chronology
-Version: 0.0.0.9001
+Version: 0.1.0
 Authors@R: c(
     person("Antoine", "Languillaume", , "antoine@thinkr.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9843-5632")),
