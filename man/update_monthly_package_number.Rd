@@ -17,20 +17,20 @@ the `cran_monthly_package_number` dataset included within {cranology}.}
 mran.}
 }
 \description{
-The creation `cran_monthly_package_number` using `scrape_cran()` is a long process
-as theunderlying scrapping operations are time consuming. To more rapidly
-update `cran_monthly_package_number` it is easier to rely on data from MRAN.
-This what this function does. It uses `get_package_number_mran()` to quickly
-update the dataset.
+The creation `cran_monthly_package_number` using `scrape_cran()` is
+a long process as the underlying scrapping operations are time consuming.
+To more rapidly update `cran_monthly_package_number` it is easier to rely
+on data from MRAN. This what this function does. It uses
+#' `get_package_number_mran()` to quickly update the dataset.
 }
 \examples{
 # Simulate `cran_monthly_package_number` update
 date_lag <- 3
 df <- cran_monthly_package_number[
- 1:(nrow(cran_monthly_package_number) - date_lag),
+  1:(nrow(cran_monthly_package_number) - date_lag),
 ]
 update_monthly_package_number(
- cran_monthly_package_number_df = df
+  cran_monthly_package_number_df = df
 )
 
 }

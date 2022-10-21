@@ -2,9 +2,10 @@
 ### Daily ----------------------------------------------------------------------
 
 attachment::att_amend_desc(
+  pkg_ignore = "roxygen2",
   extra.suggests = c(
     "knitr",
-    "devtools",
+    "roxygen2",
     "usethis",
     "withr",
     "checkhelper"
@@ -21,31 +22,6 @@ checkhelper::print_globals()
 
 # Hide this file from build
 usethis::use_build_ignore("dev/")
-
-# description ----
-library(desc)
-unlink("DESCRIPTION")
-
-my_desc <- description$new("!new")
-my_desc$set_version("0.0.0.9000")
-my_desc$set(Package = "cranology")
-my_desc$set(Title = "Monitor The Evolution Of The Number Of CRAN Packages")
-my_desc$set(
-  Description = "Scraping routines to monitor the evolution of of the number of packages on CRAN."
-)
-my_desc$set(
-  "Authors@R",
-  'c(
-  person("Antoine", "Languillaume", email = "antoine@thinkr.fr", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9843-5632")),
-  person("Sebastien", "Rochette", email = "sebastien@thinkr.fr", role = c("aut"), comment = c(ORCID = "0000-0002-1565-9313")),
-  person("Vincent", "Guyader", email = "vincent@thinkr.fr", role = c("aut"), comment = c(ORCID = "0000-0003-0671-9270")),
-  person(given = "ThinkR", role = "cph")
-)')
-my_desc$set("VignetteBuilder", "knitr")
-my_desc$del("Maintainer")
-my_desc$del("URL")
-my_desc$del("BugReports")
-my_desc$write(file = "DESCRIPTION")
 
 ## Common files
 usethis::use_mit_license("ThinkR")
