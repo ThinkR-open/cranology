@@ -25,4 +25,5 @@ on a given date.
 }
 \examples{
 get_package_number_mran(c("2018-04-10", "2020-03-19"))
+
 }

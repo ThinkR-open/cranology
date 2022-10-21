@@ -3,7 +3,7 @@
 #' @noRd
 is_parsable_date <- function(date) {
   parsed_date <- ymd(date, quiet = TRUE)
-  if ( is.na(parsed_date) ) {
+  if (is.na(parsed_date)) {
     FALSE
   } else {
     TRUE
@@ -96,11 +96,10 @@ is_anterior_to_mran_launch <- function(valid_date) {
 #'
 #' @examples
 #' get_package_number_mran(c("2018-04-10", "2020-03-19"))
-
+#'
 get_package_number_mran <- function(dates, parallelize = FALSE) {
-
   invalid_dates <- is_invalid_dates(dates)
-  if ( any(invalid_dates) ) {
+  if (any(invalid_dates)) {
     stop(
       "Some dates are not valid dates:\n",
       paste(
@@ -114,7 +113,7 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
   }
 
   anterior_to_mran_launch <- is_anterior_to_mran_launch(dates)
-  if ( any(anterior_to_mran_launch) ) {
+  if (any(anterior_to_mran_launch)) {
     stop(
       "Some dates are anterior to MRAN launch:\n",
       paste(
@@ -127,7 +126,7 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
 
   message("Scraping MRAN...")
 
-  if ( isTRUE(parallelize) ) {
+  if (isTRUE(parallelize)) {
     future_map_dfr(
       dates,
       .get_package_number_mran
@@ -142,14 +141,15 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
 
 #' Update `cran_monthly_package_number` dataset
 #'
-#' The creation `cran_monthly_package_number` using `scrape_cran()` is a long process
-#' as theunderlying scrapping operations are time consuming. To more rapidly
-#' update `cran_monthly_package_number` it is easier to rely on data from MRAN.
-#' This what this function does. It uses `get_package_number_mran()` to quickly
-#' update the dataset.
+#' The creation `cran_monthly_package_number` using `scrape_cran()` is
+#' a long process as the underlying scrapping operations are time consuming.
+#' To more rapidly update `cran_monthly_package_number` it is easier to rely
+#' on data from MRAN. This what this function does. It uses
+#' `get_package_number_mran()` to quickly update the dataset.
 #'
 #' @param cran_monthly_package_number_df A data.frame similar to
 #' the `cran_monthly_package_number` dataset included within {cranology}.
+#' @param update_until A Date. The date until when to perform the update.
 #' @inheritParams mran
 #'
 #' @importFrom utils tail
@@ -157,18 +157,23 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
 #'
 #' @export
 #' @examples
-#' # Simulate `cran_monthly_package_number` update
-#'date_lag <- 3
-#'df <- cran_monthly_package_number[
-#'  1:(nrow(cran_monthly_package_number) - date_lag),
-#']
-#'update_monthly_package_number(
-#'  cran_monthly_package_number_df = df
-#')
-#'
+#' \dontrun{
+#' # Delete some rows in `cran_monthly_package_number`
+#' date_lag <- 3
+#' df <- cran_monthly_package_number[
+#'   1:(nrow(cran_monthly_package_number) - date_lag),
+#' ]
+#' # Add them back by updating the dataset
+#' update_until <- tail(cran_monthly_package_number$date, 1)
+#' update_monthly_package_number(
+#'   cran_monthly_package_number_df = df,
+#'   update_until = update_until
+#' )
+#'}
 update_monthly_package_number <- function(
-    cran_monthly_package_number_df,
-    parallelize = FALSE
+  cran_monthly_package_number_df,
+  parallelize = FALSE,
+  update_until = today()
 ) {
   first_date <- tail(
     cran_monthly_package_number_df,
@@ -176,7 +181,7 @@ update_monthly_package_number <- function(
   )[["date"]] + month(1) - days(1)
   dates <- seq(
     from = first_date,
-    to = today(),
+    to = update_until,
     by = "1 month"
   )
   recent_months <- get_package_number_mran(

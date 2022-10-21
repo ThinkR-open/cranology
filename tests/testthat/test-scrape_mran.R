@@ -84,9 +84,10 @@ test_that("update_monthly_package_number() works", {
     1:(nrow(cran_monthly_package_number) - date_lag),
   ]
   df_updated <- update_monthly_package_number(
-    cran_monthly_package_number_df = df
+    cran_monthly_package_number_df = df,
+    update_until = tail(cran_monthly_package_number$date, 1)
   )
-  # New dates all correspondent to the same day of the month
+  # New dates all correspond to the same day of the month
   expect_length(
     unique(lubridate::day(df_updated$date)),
     1

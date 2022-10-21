@@ -22,9 +22,9 @@ app_sys <- function(...) {
 #' @importFrom purrr map safely transpose map_lgl
 #' @noRd
 detect_id_problematic_date_chr <- function(
-    fishy_dates_chr,
-    reverse = TRUE,
-    n = 100
+  fishy_dates_chr,
+  reverse = TRUE,
+  n = 100
 ) {
 
   # Promote warning to errors
@@ -59,13 +59,14 @@ detect_id_problematic_date_chr <- function(
 #' @return Nothing used for its side effect of updating documentation.
 #'
 #' @importFrom lubridate today
-#' @importFrom devtools document
 #' @importFrom cli cat_rule
 #'
 #' @noRd
-update_dataset_doc <- function(
-    dataset_name = "cran_packages_history"
-) {
+update_dataset_doc <- function(dataset_name = "cran_packages_history") {
+  if (!requireNamespace("roxygen2")) {
+    stop("Please install the {roxygen2} package to add the recommended tests.")
+  }
+
   path_doc <- paste0("R/doc_", dataset_name, ".R")
   data_doc <- readLines(path_doc)
 
@@ -98,5 +99,5 @@ update_dataset_doc <- function(
     con = path_doc
   )
   cat_rule("Regenerate documentation")
-  document()
+  roxygen2::roxygenise()
 }
