@@ -6,7 +6,8 @@
 \usage{
 update_monthly_package_number(
   cran_monthly_package_number_df,
-  parallelize = FALSE
+  parallelize = FALSE,
+  update_until = today()
 )
 }
 \arguments{
@@ -15,22 +16,28 @@ the `cran_monthly_package_number` dataset included within {cranology}.}
 
 \item{parallelize}{A logical. If TRUE {furrr} is used to asynchronously scrap
 mran.}
+
+\item{update_until}{A Date. The date until when to perform the update.}
 }
 \description{
 The creation `cran_monthly_package_number` using `scrape_cran()` is
 a long process as the underlying scrapping operations are time consuming.
 To more rapidly update `cran_monthly_package_number` it is easier to rely
 on data from MRAN. This what this function does. It uses
-#' `get_package_number_mran()` to quickly update the dataset.
+`get_package_number_mran()` to quickly update the dataset.
 }
 \examples{
-# Simulate `cran_monthly_package_number` update
+\dontrun{
+# Delete some rows in `cran_monthly_package_number`
 date_lag <- 3
 df <- cran_monthly_package_number[
   1:(nrow(cran_monthly_package_number) - date_lag),
 ]
+# Add them back by updating the dataset
+update_until <- tail(cran_monthly_package_number$date, 1)
 update_monthly_package_number(
-  cran_monthly_package_number_df = df
+  cran_monthly_package_number_df = df,
+  update_until = update_until
 )
-
+}
 }
