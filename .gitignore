@@ -4,3 +4,4 @@ docs
 .Rdata
 .httr-oauth
 .DS_Store
+.vscode
