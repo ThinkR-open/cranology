@@ -1,7 +1,7 @@
 #' cran_packages_history
 #'
 #' All packages ever available on CRAN.
-#' Last update: 2022-06-29.
+#' Last update: 2024-09-10.
 #'
 #' @format A data frame with 312 rows and 10 variables:
 #' \describe{

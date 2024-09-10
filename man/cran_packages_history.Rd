@@ -29,6 +29,6 @@ cran_packages_history
 }
 \description{
 All packages ever available on CRAN.
-Last update: 2022-06-29.
+Last update: 2024-09-10.
 }
 \keyword{datasets}
