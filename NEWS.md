@@ -1,3 +1,16 @@
+# cranology 1.0.0
+
+### Breaking change
+
+* As of July 1, 2023, the MRAN site no longer exists. The dependent functions have been replaced and renamed to scrape number of available packages on PPM (`https://packagemanager.posit.co`) : 
+  - `get_package_number_mran()` -> `get_package_number_ppm()`
+
+### Update
+
+* Data update : 
+  - cran_monthly_package_number
+  - cran_packages_history
+
 # cranology 0.1.0
 
 ### Stabilise API

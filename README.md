@@ -11,7 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of `{cranology}` is to provide tools to scrape data from CRAN
-and MRAN websites as well as useful datasets to explore the evolution of
+and PPM websites as well as useful datasets to explore the evolution of
 the number of packages on CRAN.
 
 ``` r
@@ -40,28 +40,29 @@ All packages ever available on CRAN.
 
 ``` r
 cran_packages_history
-#> # A tibble: 37,823 × 10
+#> # A tibble: 44,613 × 10
 #>    file_name    date                time  size  package_name last_archived      
 #>    <chr>        <dttm>              <chr> <chr> <chr>        <dttm>             
 #>  1 A3/          2015-08-16 21:05:00 21:05 -     A3           2015-08-16 21:05:00
 #>  2 aaMI/        2010-07-30 12:17:00 12:17 -     aaMI         2010-07-30 12:17:00
 #>  3 aaSEA/       2022-06-21 05:12:00 05:12 -     aaSEA        2022-06-21 05:12:00
-#>  4 aba/         2022-03-27 06:29:00 06:29 -     aba          2022-03-27 06:29:00
-#>  5 abbyyR/      2019-06-25 04:30:00 04:30 -     abbyyR       2019-06-25 04:30:00
-#>  6 abc/         2022-05-19 07:20:00 07:20 -     abc          2022-05-19 07:20:00
-#>  7 ABCanalysis/ 2017-03-13 13:31:00 13:31 -     ABCanalysis  2017-03-13 13:31:00
-#>  8 abcdeFBA/    2022-03-07 06:20:00 06:20 -     abcdeFBA     2022-03-07 06:20:00
-#>  9 ABCExtremes/ 2015-06-19 11:26:00 11:26 -     ABCExtremes  2015-06-19 11:26:00
-#> 10 abclass/     2022-05-28 18:10:00 18:10 -     abclass      2022-05-28 18:10:00
-#> # … with 37,813 more rows, and 4 more variables: archive <lgl>,
-#> #   first_date <dttm>, n_versions <int>, last_modified <dttm>
+#>  4 AATtools/    2024-08-16 09:10:00 09:10 -     AATtools     2024-08-16 09:10:00
+#>  5 aba/         2022-03-27 06:29:00 06:29 -     aba          2022-03-27 06:29:00
+#>  6 abbyyR/      2023-11-03 04:42:00 04:42 -     abbyyR       2023-11-03 04:42:00
+#>  7 abc.data/    2024-03-24 10:15:00 10:15 -     abc.data     2024-03-24 10:15:00
+#>  8 abc/         2022-05-19 07:20:00 07:20 -     abc          2022-05-19 07:20:00
+#>  9 abcADM/      2023-03-02 11:13:00 11:13 -     abcADM       2023-03-02 11:13:00
+#> 10 ABCanalysis/ 2017-03-13 13:31:00 13:31 -     ABCanalysis  2017-03-13 13:31:00
+#> # ℹ 44,603 more rows
+#> # ℹ 4 more variables: archive <lgl>, first_date <dttm>, n_versions <int>,
+#> #   last_modified <dttm>
 ```
 
 The evolution of the number of packages on CRAN since its beginning.
 
 ``` r
 cran_monthly_package_number
-#> # A tibble: 297 × 2
+#> # A tibble: 324 × 2
 #>    date       number_packages
 #>    <date>               <dbl>
 #>  1 1997-10-08               1
@@ -74,7 +75,7 @@ cran_monthly_package_number
 #>  8 1998-05-08               6
 #>  9 1998-06-08               6
 #> 10 1998-07-08               7
-#> # … with 287 more rows
+#> # ℹ 314 more rows
 ```
 
 ### Scraping tools
@@ -91,9 +92,9 @@ future::plan(future::multisession)
 scrape_cran_history()
 ```
 
-#### MRAN
+#### PPM
 
-`{cranology}` also includes the `get_package_number_mran()` function to
+`{cranology}` also includes the `get_package_number_ppm()` function to
 more quickly get the number of packages that were available on CRAN at
 any given date.
 
@@ -103,25 +104,25 @@ dates <- seq(
   by = "1 year", 
   length.out = 4
 )
-get_package_number_mran(dates)
-#> Scraping MRAN...
+get_package_number_ppm(dates)
+#> Scraping ppm...
 #> Scraping number packages on: 2018-04-10
 #> Scraping number packages on: 2019-04-10
 #> Scraping number packages on: 2020-04-10
 #> Scraping number packages on: 2021-04-10
 #>         date number_packages
-#> 1 2018-04-10           12418
-#> 2 2019-04-10           14042
-#> 3 2020-04-10           15507
-#> 4 2021-04-10           17398
+#> 1 2018-04-10           12415
+#> 2 2019-04-10           14025
+#> 3 2020-04-10           15548
+#> 4 2021-04-10           17388
 ```
 
 Be careful though as this will only work for dates posterior to
-`2014-09-17` the day when MRAN was up online for the first time.
+`2014-09-17` the day when PPM was up online for the first time.
 
 ``` r
-get_package_number_mran("2013-08-28")
-#> Error: Some dates are anterior to MRAN launch:
+get_package_number_ppm("2013-08-28")
+#> Error: Some dates are anterior to ppm launch:
 #> 1: 2013-08-28
 ```
 
@@ -129,19 +130,19 @@ For earlier dates use `cran_monthly_package_number`. Here is a naïve
 example:
 
 ``` r
-date_before_mran <- as.Date("2013-08-28")
+date_before_ppm <- as.Date("2013-08-28")
 
 cran_monthly_package_number[
   min(
     which(
-      cran_monthly_package_number$date >= date_before_mran
+      cran_monthly_package_number$date >= date_before_ppm
     )
   ), 
 ]
 #> # A tibble: 1 × 2
 #>   date       number_packages
 #>   <date>               <dbl>
-#> 1 2013-09-08            4906
+#> 1 2013-09-08            4904
 ```
 
 ## Acknowledgements

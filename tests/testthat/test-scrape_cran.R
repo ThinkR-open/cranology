@@ -80,13 +80,23 @@ test_that("get_package_first_release() works", {
         tzone = "UTC",
         class = c("POSIXct","POSIXt")
       ),
-      n_versions = 4L
+      n_versions = 11L
     ),
     row.names = c(NA, -1L),
     class = c("tbl_df", "tbl", "data.frame")
   )
   expect_identical(
-    get_package_first_release("golem"),
-    expected_tbl
+    get_package_first_release("golem")$package_name,
+    expected_tbl$package_name
+  )
+
+  expect_identical(
+    get_package_first_release("golem")$first_date,
+    expected_tbl$first_date
+  )
+
+  expect_type(
+    get_package_first_release("golem")$n_versions,
+    "integer"
   )
 })

@@ -8,7 +8,7 @@ attachment::att_amend_desc(
     "usethis",
     "withr",
     "checkhelper"
-  )
+  ), update.config = TRUE
 )
 usethis::use_dev_package("checkhelper", type = "Suggests")
 
@@ -72,7 +72,7 @@ use_r_with_test <- function(name) {
 use_r_with_test("scrape_cran")
 use_r_with_test("utils")
 use_r_with_test("plot")
-use_r_with_test("scrape_mran")
+use_r_with_test("scrape_ppm")
 
 ## Package quality -----------------------------------------
 

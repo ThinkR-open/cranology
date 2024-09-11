@@ -221,7 +221,7 @@ get_cran_monthly_package_number <- function(
 
 #' Scrape CRAN packages history
 #'
-#' This function is the workhorse of {cranology}. It scrapes
+#' This function is the workhorse of \{cranology\}. It scrapes
 #' https://cran.rstudio.com and generates two datasets:
 #'
 #' * `cran_packages_history`: A data.frame gathering information about every package
