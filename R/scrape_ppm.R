@@ -34,18 +34,18 @@ is_invalid_dates <- function(dates) {
   )
 }
 
-is_anterior_to_mran_launch <- function(valid_date) {
+is_anterior_to_ppm_launch <- function(valid_date) {
   as.Date("2014-09-17") > valid_date
 }
 
 #' @importFrom utils available.packages
 #' @noRd
-.get_package_number_mran <- function(date) {
+.get_package_number_ppm <- function(date) {
   tryCatch(
     error = function(cnd) {
       message(
         sprintf(
-          "Impossible to query MRAN for this particualar date: %s",
+          "Impossible to query ppm for this particualar date: %s",
           date
         )
       )
@@ -62,7 +62,7 @@ is_anterior_to_mran_launch <- function(valid_date) {
         date = date,
         number_packages = nrow(
           available.packages(
-            repos = sprintf("https://mran.microsoft.com/snapshot/%s", date)
+            repos = sprintf("https://packagemanager.posit.co/cran/%s", date)
           )
         )
       )
@@ -72,17 +72,17 @@ is_anterior_to_mran_launch <- function(valid_date) {
 
 
 
-#' Get number of package on CRAN on a given date using MRAN
+#' Get number of package on CRAN on a given date using ppm
 #'
-#' This function queries MRAN to retrieve the number of package on CRAN
+#' This function queries ppm to retrieve the number of package on CRAN
 #' on a given date.
 #'
 #' @param dates A vector of dates. Either a character vector of the form "yyyy-mm-dd"
 #' or a vector of class "Date". All dates must be posterior to "2014-09-17", the
-#' day of MRAN first CRAN snapshot.
+#' day of ppm first CRAN snapshot.
 #'
-#' @param parallelize A logical. If TRUE {furrr} is used to asynchronously scrap
-#' mran.
+#' @param parallelize A logical. If TRUE \{furrr\} is used to asynchronously scrap
+#' ppm.
 #'
 #' @return A data.frame with two columns `date` and `n` the number of packages on CRAN
 #' at that given `date`.
@@ -92,12 +92,12 @@ is_anterior_to_mran_launch <- function(valid_date) {
 #'
 #' @export
 #'
-#' @name mran
+#' @name ppm
 #'
 #' @examples
-#' get_package_number_mran(c("2018-04-10", "2020-03-19"))
+#' get_package_number_ppm(c("2018-04-10", "2020-03-19"))
 
-get_package_number_mran <- function(dates, parallelize = FALSE) {
+get_package_number_ppm <- function(dates, parallelize = FALSE) {
 
   invalid_dates <- is_invalid_dates(dates)
   if ( any(invalid_dates) ) {
@@ -113,29 +113,29 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
     )
   }
 
-  anterior_to_mran_launch <- is_anterior_to_mran_launch(dates)
-  if ( any(anterior_to_mran_launch) ) {
+  anterior_to_ppm_launch <- is_anterior_to_ppm_launch(dates)
+  if ( any(anterior_to_ppm_launch) ) {
     stop(
-      "Some dates are anterior to MRAN launch:\n",
+      "Some dates are anterior to ppm launch:\n",
       paste(
-        paste0(which(anterior_to_mran_launch), ": ", dates[anterior_to_mran_launch]),
+        paste0(which(anterior_to_ppm_launch), ": ", dates[anterior_to_ppm_launch]),
         collapse = "\n"
       ),
       call. = FALSE
     )
   }
 
-  message("Scraping MRAN...")
+  message("Scraping ppm...")
 
   if ( isTRUE(parallelize) ) {
     future_map_dfr(
       dates,
-      .get_package_number_mran
+      .get_package_number_ppm
     )
   } else {
     map_dfr(
       dates,
-      .get_package_number_mran
+      .get_package_number_ppm
     )
   }
 }
@@ -144,13 +144,13 @@ get_package_number_mran <- function(dates, parallelize = FALSE) {
 #'
 #' The creation `cran_monthly_package_number` using `scrape_cran()` is a long process
 #' as theunderlying scrapping operations are time consuming. To more rapidly
-#' update `cran_monthly_package_number` it is easier to rely on data from MRAN.
-#' This what this function does. It uses `get_package_number_mran()` to quickly
+#' update `cran_monthly_package_number` it is easier to rely on data from ppm.
+#' This what this function does. It uses `get_package_number_ppm()` to quickly
 #' update the dataset.
 #'
 #' @param cran_monthly_package_number_df A data.frame similar to
-#' the `cran_monthly_package_number` dataset included within {cranology}.
-#' @inheritParams mran
+#' the `cran_monthly_package_number` dataset included within \{cranology\}.
+#' @inheritParams ppm
 #'
 #' @importFrom utils tail
 #' @importFrom lubridate month days today
@@ -179,7 +179,7 @@ update_monthly_package_number <- function(
     to = today(),
     by = "1 month"
   )
-  recent_months <- get_package_number_mran(
+  recent_months <- get_package_number_ppm(
     dates = dates,
     parallelize = parallelize
   )

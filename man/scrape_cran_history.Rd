@@ -11,7 +11,7 @@ A list of two data.frames: `cran_packages_history` and
 `cran_monthly_package_number`.
 }
 \description{
-This function is the workhorse of {cranology}. It scrapes
+This function is the workhorse of \{cranology\}. It scrapes
 https://cran.rstudio.com and generates two datasets:
 }
 \details{

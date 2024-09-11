@@ -9,5 +9,5 @@
 #'   \item{ number_packages }{  [numeric] Number of packages available on CRAN
 #'   at that given date.}
 #' }
-#' @source https://cran.rstudio.com/src/contrib/ and https://mran.microsoft.com/
+#' @source https://cran.rstudio.com/src/contrib/ and https://packagemanager.posit.co/cran/
 "cran_monthly_package_number"

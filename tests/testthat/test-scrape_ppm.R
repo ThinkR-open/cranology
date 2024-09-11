@@ -36,43 +36,43 @@ test_that("is_valid_dates() works", {
   )
 })
 
-test_that("is_anterior_to_mran_launch() works", {
+test_that("is_anterior_to_ppm_launch() works", {
   expect_true(
-    is_anterior_to_mran_launch(as.Date("2013-09-10"))
+    is_anterior_to_ppm_launch(as.Date("2013-09-10"))
   )
   expect_false(
-    is_anterior_to_mran_launch(as.Date("2019-09-10"))
+    is_anterior_to_ppm_launch(as.Date("2019-09-10"))
   )
 })
 
-test_that("get_package_number_mran() works", {
+test_that("get_package_number_ppm() works", {
 
   ## Valid cases
   dday <- as.Date("2022-04-01", "%Y-%m-%d")
   dates <- seq(from = dday - 2, to = dday, by = "day")
-  result <- get_package_number_mran(dates)
+  result <- get_package_number_ppm(dates)
   expect_s3_class(result, "data.frame")
   expect_identical(
     result$date,
     structure(c(19081, 19082, 19083), class = "Date")
   )
-  # Account for MRAN failure -> NA being returned
+  # Account for ppm failure -> NA being returned
   # result$n <- c(19022, NA, 19033)
   value_equal <- result$n %in% c(19022L, 19035L, 19033L)
   expect_true(all(value_equal | is.na(result$n[!value_equal])))
 
   ## Invalid cases
   expect_error(
-    get_package_number_mran(c("2018-02-21", "2017-123-13")),
+    get_package_number_ppm(c("2018-02-21", "2017-123-13")),
     regexp = "Some dates are not valid dates:"
   )
   expect_error(
-    get_package_number_mran(c("2018-02-21", "232-344-3")),
+    get_package_number_ppm(c("2018-02-21", "232-344-3")),
     regexp = "Some dates are not valid dates:"
   )
   expect_error(
-    get_package_number_mran(c("2019-09-10", "2013-09-10")),
-    regexp = "Some dates are anterior to MRAN launch:\n2: 2013-09-10"
+    get_package_number_ppm(c("2019-09-10", "2013-09-10")),
+    regexp = "Some dates are anterior to ppm launch:\n2: 2013-09-10"
   )
 
 })

@@ -13,7 +13,7 @@ A data frame with 324 rows and 2 variables:
 }
 }
 \source{
-https://cran.rstudio.com/src/contrib/ and https://mran.microsoft.com/
+https://cran.rstudio.com/src/contrib/ and https://packagemanager.posit.co/cran/
 }
 \usage{
 cran_monthly_package_number
